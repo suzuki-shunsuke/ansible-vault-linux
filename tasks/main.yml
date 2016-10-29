@@ -1,0 +1,30 @@
+---
+# tasks file for vault
+- name: Remove files.
+  file:
+    state: absent
+    path: "/tmp/{{item}}"
+  with_items:
+  - "vault_{{vault_version}}_linux_amd64.zip"
+  - vault
+- name: Download the package.
+  get_url:
+    url: "https://releases.hashicorp.com/vault/{{vault_version}}/vault_{{vault_version}}_linux_amd64.zip"
+    dest: /tmp
+    mode: 0777
+- name: Unzip the package.
+  command: "unzip /tmp/vault_{{vault_version}}_linux_amd64.zip -d /tmp"
+- name: Install vault
+  copy:
+    src: /tmp/vault
+    dest: /usr/bin
+    remote_src: yes
+    mode: 0755
+  become: "{{vault_nonroot}}"
+- name: Remove files.
+  file:
+    state: absent
+    path: "/tmp/{{item}}"
+  with_items:
+  - "vault_{{vault_version}}_linux_amd64.zip"
+  - vault

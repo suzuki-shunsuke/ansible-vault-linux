@@ -1,0 +1,19 @@
+---
+- hosts: default
+  vars:
+    nonroot: "{{(ansible_env.HOME == '/root') | ternary('no', 'yes')}}"
+  pre_tasks:
+  - name: Install unzip
+    apt:
+      name: zip
+    become: "{{nonroot}}"
+  roles:
+  - role: ansible-vault-linux
+    vault_version: 0.6.0
+  tasks:
+  - name: vault version
+    command: vault version
+    register: result
+    changed_when: false
+  - debug:
+      var: result
