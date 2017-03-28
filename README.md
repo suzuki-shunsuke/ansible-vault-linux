@@ -7,6 +7,11 @@ Install vault on Linux.
 
 https://galaxy.ansible.com/suzuki-shunsuke/vault-linux/
 
+This role is deprecated
+------------------------
+
+Please use [suzuki-shunsuke.hashicorp-binary](https://galaxy.ansible.com/suzuki-shunsuke/hashicorp-binary/).
+
 Requirements
 ------------
 
